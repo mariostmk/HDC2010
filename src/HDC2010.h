@@ -22,25 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110 - 1301  USA
 #define EXPECTED_DEVICE_ID_LOW 0xD0
 #define EXPECTED_DEVICE_ID_HIGH 0x07
 
-class HDC2010 {
-public:
-    HDC2010(uint8_t address);
-    bool begin();
-    float readHumidity(uint8_t readCount);
-    float readTemperature(uint8_t readCount);
-    void resetSensor();
-    void configureSensor(HDC2010_MeasurementRate measurementRate, HDC2010_TemperatureResolution resolutionTemperature, HDC2010_HumidityResolution resolutionHumidity);
-
-private:
-    uint8_t _address;
-    uint8_t HDC2010_Config = 0x00;
-    uint8_t HDC2010_MeasurementConfig = 0x00;
-    void writeRegister(uint8_t reg, uint8_t value);
-    uint8_t readRegister(uint8_t reg);
-    void triggerMeasurement();
-    float calculateAverage(float* measurements, uint8_t count);
-};
-
 enum HDC2010_MeasurementRate {
     Manual,
     TwoMinutes,
@@ -62,4 +43,23 @@ enum HDC2010_HumidityResolution {
     Humid_14_Bit = 14,
     Humid_11_Bit = 11,
     Humid_9_Bit = 9
+};
+
+class HDC2010 {
+public:
+    HDC2010(uint8_t address);
+    bool begin();
+    float readHumidity(uint8_t readCount);
+    float readTemperature(uint8_t readCount);
+    void resetSensor();
+    void configureSensor(HDC2010_MeasurementRate measurementRate, HDC2010_TemperatureResolution resolutionTemperature, HDC2010_HumidityResolution resolutionHumidity);
+
+private:
+    uint8_t _address;
+    uint8_t HDC2010_Config = 0x00;
+    uint8_t HDC2010_MeasurementConfig = 0x00;
+    void writeRegister(uint8_t reg, uint8_t value);
+    uint8_t readRegister(uint8_t reg);
+    void triggerMeasurement();
+    float calculateAverage(float* measurements, uint8_t count);
 };
